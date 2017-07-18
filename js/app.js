@@ -45,10 +45,10 @@
 		};
 
 		// 3 删除一条任务
-		vm.del = function(id) {
+		vm.del = function (id) {
 			// console.log(id);
-			for(var i = 0; i < todoList.length; i++) {
-				if(todoList[i].id === id) {
+			for (var i = 0; i < todoList.length; i++) {
+				if (todoList[i].id === id) {
 					todoList.splice(i, 1);
 					break;
 				}
@@ -63,33 +63,33 @@
 		// 页面中与 editingId 相关的指令都会被重新计算，那么 editingId === todo.id
 		// 当前双击的这一项id就与 editingId 相同了，那么当前项就会添加类
 		vm.editingId = -1;
-		vm.edit = function(id) {
+		vm.edit = function (id) {
 			vm.editingId = id;
 		};
 		// 编辑文本框通过 todo.name 与数据双向绑定，当我们在视图中修改了任务名称以后
 		// 然后，数据会自动发生变化。
 		// 敲回车，执行 vm.editingId = -1 ，数据发生变化，重新计算 editingId === todo.id
 		// 此时，所有任务项的id 与 editingId 都不相同，所以，元素都移除这个类
-		vm.editSave = function() {
+		vm.editSave = function () {
 			vm.editingId = -1;
 		};
 
 		// 5 切换任务选中状态(单个或批量)
 		// 单个选中：通过双向数据绑定来实现的（ng-model）
 		vm.isCheckedAll = false;
-		vm.checkAll = function() {
+		vm.checkAll = function () {
 			// 根据全选按钮的选中状态，来控制所有任务项的选中状态
-			for(var i = 0; i < todoList.length; i++) {
+			for (var i = 0; i < todoList.length; i++) {
 				todoList[i].isCompleted = vm.isCheckedAll;
 			}
 		};
 
 		// 6 清除已完成任务
-		vm.delCompleted = function() {
+		vm.delCompleted = function () {
 			// 删除已完成，就是保留未完成
 			var tempArr = [];
-			for(var i = 0; i < todoList.length; i++) {
-				if(!todoList[i].isCompleted) {
+			for (var i = 0; i < todoList.length; i++) {
+				if (!todoList[i].isCompleted) {
 					tempArr.push(todoList[i]);
 				}
 			}
@@ -109,10 +109,10 @@
 			} */
 		};
 		// 6.1 控制清除任务按钮的展示和隐藏
-		vm.isShow = function() {
+		vm.isShow = function () {
 			var ret = false;
-			for(var i = 0; i < todoList.length; i++) {
-				if(todoList[i].isCompleted) {
+			for (var i = 0; i < todoList.length; i++) {
+				if (todoList[i].isCompleted) {
 					ret = true;
 					break;
 				}
@@ -122,10 +122,10 @@
 		};
 
 		// 7 显示未完成任务数
-		vm.getCount = function() {
+		vm.getCount = function () {
 			var count = 0;
-			for(var i = 0; i < todoList.length; i++) {
-				if(!todoList[i].isCompleted) {
+			for (var i = 0; i < todoList.length; i++) {
+				if (!todoList[i].isCompleted) {
 					count++;
 				}
 			}
@@ -133,5 +133,16 @@
 			return count;
 		};
 
+		// 8 显示不同状态的任务 以及当前任务高亮处理
+		vm.status = undefined;
+		vm.selectAll = function () {
+			vm.status = undefined;
+		};
+		vm.selectActive = function () {
+			vm.status = false;
+		};
+		vm.selectCompleted = function () {
+			vm.status = true;
+		};
 	}
 })(angular);
