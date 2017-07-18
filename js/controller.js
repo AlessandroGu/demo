@@ -71,53 +71,13 @@
     };
 
     // 6 清除已完成任务
-    vm.delCompleted = function () {
-      // 删除已完成，就是保留未完成
-      var tempArr = [];
-      for (var i = 0; i < todoList.length; i++) {
-        if (!todoList[i].isCompleted) {
-          tempArr.push(todoList[i]);
-        }
-      }
-
-      // 清空数组（没有改变指向）
-      todoList.length = 0;
-      [].push.apply(todoList, tempArr);
-
-      // 连等赋值：（改变指向）
-      // vm.todoList = todoList = tempArr;
-
-			/* for(var i = 0; i < todoList.length; i++) {
-				if(todoList[i].isCompleted) {
-					todoList.splice(i, 1);
-					i--;
-				}
-			} */
-    };
+    vm.delCompleted = TodoSrv.delCompleted;
+    
     // 6.1 控制清除任务按钮的展示和隐藏
-    vm.isShow = function () {
-      var ret = false;
-      for (var i = 0; i < todoList.length; i++) {
-        if (todoList[i].isCompleted) {
-          ret = true;
-          break;
-        }
-      }
-
-      return ret;
-    };
+    vm.isShow = TodoSrv.isShow;
 
     // 7 显示未完成任务数
-    vm.getCount = function () {
-      var count = 0;
-      for (var i = 0; i < todoList.length; i++) {
-        if (!todoList[i].isCompleted) {
-          count++;
-        }
-      }
-
-      return count;
-    };
+    vm.getCount = TodoSrv.getCount;
 
     // 8 显示不同状态的任务 以及当前任务高亮处理
     vm.status = undefined;

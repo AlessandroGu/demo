@@ -63,6 +63,48 @@
 
         that.save();
       };
+
+      // 清除已完成任务
+      this.delCompleted = function () {
+        // 删除已完成，就是保留未完成
+        var tempArr = [];
+        for (var i = 0; i < todoList.length; i++) {
+          if (!todoList[i].isCompleted) {
+            tempArr.push(todoList[i]);
+          }
+        }
+
+        // 清空数组（没有改变指向）
+        todoList.length = 0;
+        [].push.apply(todoList, tempArr);
+
+        that.save();
+      };
+
+      // 清除按钮的展示和隐藏
+      this.isShow = function () {
+        var ret = false;
+        for (var i = 0; i < todoList.length; i++) {
+          if (todoList[i].isCompleted) {
+            ret = true;
+            break;
+          }
+        }
+
+        return ret;
+      };
+
+      // 显示未完成任务数
+      this.getCount = function () {
+        var count = 0;
+        for (var i = 0; i < todoList.length; i++) {
+          if (!todoList[i].isCompleted) {
+            count++;
+          }
+        }
+
+        return count;
+      };
     }]);
 
 })(angular);
