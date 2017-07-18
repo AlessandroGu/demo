@@ -3,9 +3,9 @@
 
 	angular
 		.module('todoApp', [])
-		.controller('TodoController', ['$scope', TodoController]);
+		.controller('TodoController', ['$scope', '$location', TodoController]);
 
-	function TodoController($scope) {
+	function TodoController($scope, $location) {
 		// Your starting point. Enjoy the ride!
 
 		// vm ---> viewmodel 视图模型
@@ -135,7 +135,7 @@
 
 		// 8 显示不同状态的任务 以及当前任务高亮处理
 		vm.status = undefined;
-		vm.selectAll = function () {
+		/* vm.selectAll = function () {
 			vm.status = undefined;
 		};
 		vm.selectActive = function () {
@@ -143,6 +143,26 @@
 		};
 		vm.selectCompleted = function () {
 			vm.status = true;
-		};
+		}; */
+
+		// 9 根据URL变化显示相应任务
+		// var url = $location.url()
+		// console.log(url);
+		vm.location = $location;
+		// vm.location = $location.url();
+		vm.$watch('location.url()', function (newVal, oldVal) {
+			console.log(newVal);
+			switch (newVal) {
+				case '/active':
+					vm.status = false;
+					break;
+				case '/completed':
+					vm.status = true;
+					break;
+				default:
+					vm.status = undefined;
+					break;
+			}
+		});
 	}
 })(angular);
