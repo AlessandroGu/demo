@@ -40,7 +40,7 @@
 
         todoList.push({ id: id, name: taskName, isCompleted: false });
 
-        this.save();
+        that.save();
       };
 
       // 删除数据
