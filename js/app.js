@@ -108,5 +108,17 @@
 				}
 			} */
 		};
+		// 6.1 控制清除任务按钮的展示和隐藏
+		vm.isShow = function() {
+			var ret = false;
+			for(var i = 0; i < todoList.length; i++) {
+				if(todoList[i].isCompleted) {
+					ret = true;
+					break;
+				}
+			}
+
+			return ret;
+		};
 	}
 })(angular);
