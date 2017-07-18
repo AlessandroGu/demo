@@ -74,6 +74,17 @@
 			vm.editingId = -1;
 		};
 
+		// 5 切换任务选中状态(单个或批量)
+		// 单个选中：通过双向数据绑定来实现的（ng-model）
+		vm.isCheckedAll = false;
+		vm.checkAll = function() {
+			// 根据全选按钮的选中状态，来控制所有任务项的选中状态
+			for(var i = 0; i < todoList.length; i++) {
+				todoList[i].isCompleted = vm.isCheckedAll;
+			}
+		};
+
+
 
 	}
 })(angular);
