@@ -21,9 +21,7 @@
 
     // 1 展示任务列表
     var todoList = TodoSrv.getData();
-
     vm.todoList = todoList;
-
 
     // 2 添加任务
     vm.taskName = ''; // 用户输入的任务名称
@@ -32,32 +30,16 @@
         return;
       }
 
-      var id,
-        length = todoList.length;
+      TodoSrv.add(vm.taskName);
 
-      // 如果数组中没有值，那么添加项的id就是：1
-      // 如果数组中右值，那么就取数组最后一项的id，再加1
-      if (length === 0) {
-        id = 1;
-      } else {
-        // 获取数组最后一项的id值，再加1，就是当前项的id值
-        id = todoList[todoList.length - 1].id + 1;
-      }
-
-      todoList.push({ id: id, name: vm.taskName, isCompleted: false });
       vm.taskName = '';
     };
 
     // 3 删除一条任务
-    vm.del = function (id) {
-      // console.log(id);
-      for (var i = 0; i < todoList.length; i++) {
-        if (todoList[i].id === id) {
-          todoList.splice(i, 1);
-          break;
-        }
-      }
-    };
+    vm.del = TodoSrv.del;
+    // vm.del = function(id) {
+    //   TodoSrv.del(id);
+    // };
 
     // 4 修改任务
     // 思路：双击任务元素，给当前项添加 editing 类
@@ -76,16 +58,16 @@
     // 此时，所有任务项的id 与 editingId 都不相同，所以，元素都移除这个类
     vm.editSave = function () {
       vm.editingId = -1;
+
+      // 修改完数据以后，保存数据
+      TodoSrv.save();
     };
 
     // 5 切换任务选中状态(单个或批量)
     // 单个选中：通过双向数据绑定来实现的（ng-model）
     vm.isCheckedAll = false;
     vm.checkAll = function () {
-      // 根据全选按钮的选中状态，来控制所有任务项的选中状态
-      for (var i = 0; i < todoList.length; i++) {
-        todoList[i].isCompleted = vm.isCheckedAll;
-      }
+      TodoSrv.checkAll(vm.isCheckedAll);
     };
 
     // 6 清除已完成任务
