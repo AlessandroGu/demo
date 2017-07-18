@@ -84,7 +84,29 @@
 			}
 		};
 
+		// 6 清除已完成任务
+		vm.delCompleted = function() {
+			// 删除已完成，就是保留未完成
+			var tempArr = [];
+			for(var i = 0; i < todoList.length; i++) {
+				if(!todoList[i].isCompleted) {
+					tempArr.push(todoList[i]);
+				}
+			}
 
+			// 清空数组（没有改变指向）
+			todoList.length = 0;
+			[].push.apply(todoList, tempArr);
 
+			// 连等赋值：（改变指向）
+			// vm.todoList = todoList = tempArr;
+
+			/* for(var i = 0; i < todoList.length; i++) {
+				if(todoList[i].isCompleted) {
+					todoList.splice(i, 1);
+					i--;
+				}
+			} */
+		};
 	}
 })(angular);
